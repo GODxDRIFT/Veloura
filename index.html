@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veloura Skin — Modern Beauty & Skincare Brand</title>
+  <meta name="description" content="Luxury modern skincare brand website with routines, products, ingredient science, reviews, FAQ, contact, and interactive beauty experiences." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --cream:#F8F1EA;
+      --rose:#D9A6A3;
+      --deep:#2F3A34;
+      --white:#ffffff;
+      --shadow:0 20px 60px rgba(47,58,52,.12);
+      --radius:24px;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--cream);
+      color:var(--deep);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x:hidden;
+    }
+    h1,h2,h3,h4,.serif{
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing:-.02em;
+    }
+    .glass{
+      background:rgba(255,255,255,.58);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow: var(--shadow);
+    }
+    .card{
+      background:rgba(255,255,255,.76);
+      border:1px solid rgba(47,58,52,.08);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .btn-primary{
+      background:var(--deep);
+      color:var(--cream);
+      transition:all .3s ease;
+    }
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 30px rgba(47,58,52,.22);
+    }
+    .btn-secondary{
+      background:var(--rose);
+      color:var(--deep);
+      transition:all .3s ease;
+    }
+    .btn-secondary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 30px rgba(217,166,163,.28);
+    }
+    .gradient-text{
+      background:linear-gradient(120deg,var(--deep),var(--rose));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .hero-bg{
+      background:
+        radial-gradient(circle at 20% 20%, rgba(217,166,163,.35), transparent 35%),
+        radial-gradient(circle at 80% 10%, rgba(47,58,52,.10), transparent 28%),
+        radial-gradient(circle at 85% 75%, rgba(217,166,163,.28), transparent 22%),
+        linear-gradient(180deg, #fffaf6 0%, var(--cream) 100%);
+    }
+    .blob{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(8px);
+      animation: float 8s ease-in-out infinite;
+      opacity:.6;
+      pointer-events:none;
+    }
+    @keyframes float{
+      0%,100%{transform:translateY(0) translateX(0)}
+      50%{transform:translateY(-20px) translateX(10px)}
+    }
+    .reveal{
+      opacity:0;
+      transform:translateY(20px);
+      transition:all .8s ease;
+    }
+    .reveal.visible{
+      opacity:1;
+      transform:none;
+    }
+    .product-card:hover{
+      transform:translateY(-8px);
+    }
+    .product-card{
+      transition:all .35s ease;
+    }
+    .badge{
+      background:rgba(217,166,163,.18);
+      color:var(--deep);
+      border:1px solid rgba(47,58,52,.08);
+    }
+    .section-title-line::after{
+      content:"";
+      display:block;
+      width:74px;
+      height:2px;
+      background:linear-gradient(90deg,var(--rose),transparent);
+      margin-top:12px;
+    }
+    .parallax{
+      transform:translateY(var(--parallax,0));
+      transition:transform .2s linear;
+    }
+    .slider-track{
+      transition:transform .6s ease;
+    }
+    .faq-item.open .faq-answer{
+      max-height:220px;
+      padding-top:14px;
+    }
+    .faq-answer{
+      max-height:0;
+      overflow:hidden;
+      transition:all .35s ease;
+    }
+    .before-after-wrap{
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+    }
+    .before-after-after{
+      position:absolute;
+      inset:0;
+      width:50%;
+      overflow:hidden;
+      border-right:2px solid rgba(255,255,255,.95);
+    }
+    .range-thumb{
+      appearance:none;
+      -webkit-appearance:none;
+      width:100%;
+      background:transparent;
+      position:absolute;
+      inset:0;
+      z-index:20;
+      cursor:ew-resize;
+    }
+    .range-thumb::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      appearance:none;
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      background:var(--white);
+      border:2px solid var(--deep);
+      box-shadow:0 10px 25px rgba(0,0,0,.18);
+    }
+    .marquee{
+      display:flex;
+      gap:1rem;
+      width:max-content;
+      animation:scroll 24s linear infinite;
+    }
+    @keyframes scroll{
+      from{transform:translateX(0)}
+      to{transform:translateX(-50%)}
+    }
+    .nav-link{
+      position:relative;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      width:0;
+      height:2px;
+      background:var(--rose);
+      transition:width .3s ease;
+    }
+    .nav-link:hover::after{width:100%}
+    .grid-auto{
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    }
+    .input{
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(47,58,52,.12);
+      color:var(--deep);
+      outline:none;
+      transition:all .25s ease;
+    }
+    .input:focus{
+      border-color:var(--rose);
+      box-shadow:0 0 0 4px rgba(217,166,163,.15);
+    }
+    .pulse-ring::before{
+      content:"";
+      position:absolute;
+      inset:-8px;
+      border-radius:9999px;
+      border:1px solid rgba(217,166,163,.6);
+      animation:pulseRing 1.8s infinite;
+    }
+    @keyframes pulseRing{
+      0%{transform:scale(.9);opacity:.9}
+      100%{transform:scale(1.35);opacity:0}
+    }
+    @media (max-width: 768px){
+      .hero-grid{grid-template-columns:1fr !important}
+      .section-title-line::after{margin-left:auto;margin-right:auto}
+    }
+  </style>
+</head>
+<body>
+  <div class="fixed inset-0 -z-10 hero-bg"></div>
+  <div class="blob w-56 h-56 bg-[rgba(217,166,163,.35)] top-10 -left-10"></div>
+  <div class="blob w-72 h-72 bg-[rgba(47,58,52,.10)] top-32 right-0" style="animation-delay:2s;"></div>
+
+  <header class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <div class="glass rounded-full px-5 py-3 flex items-center justify-between">
+        <a href="#home" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--deep)] text-[var(--cream)] font-bold">V</div>
+          <div>
+            <div class="serif text-xl font-bold leading-none">Veloura Skin</div>
+            <div class="text-xs opacity-70">clinical luxury skincare</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a class="nav-link" href="#products">Products</a>
+          <a class="nav-link" href="#routine">Routine</a>
+          <a class="nav-link" href="#science">Science</a>
+          <a class="nav-link" href="#results">Results</a>
+          <a class="nav-link" href="#reviews">Reviews</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </nav>
+
+        <div class="hidden md:flex items-center gap-3">
+          <button class="text-sm px-4 py-2 rounded-full border border-[rgba(47,58,52,.14)]">Search</button>
+          <button class="btn-primary text-sm px-5 py-2 rounded-full">Shop Now</button>
+        </div>
+
+        <button id="menuBtn" class="md:hidden w-11 h-11 rounded-full bg-white/80 border border-black/5 flex items-center justify-center">
+          <span class="text-xl">☰</span>
+        </button>
+      </div>
+
+      <div id="mobileMenu" class="hidden mt-3 glass rounded-3xl p-5 md:hidden">
+        <div class="flex flex-col gap-4 text-sm font-medium">
+          <a href="#products">Products</a>
+          <a href="#routine">Routine</a>
+          <a href="#science">Science</a>
+          <a href="#results">Results</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Contact</a>
+          <button class="btn-primary rounded-full py-3 mt-2">Shop Now</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="home" class="pt-32">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+      <div class="grid hero-grid lg:grid-cols-[1.1fr_.9fr] gap-10 items-center">
+        <div class="reveal">
+          <div class="inline-flex items-center gap-2 badge px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <span>New Season Glow Collection</span>
+            <span>•</span>
+            <span>Clean • Cruelty-Free • Clinically Tested</span>
+          </div>
+          <h1 class="serif text-5xl sm:text-6xl lg:text-7xl leading-[.95] font-semibold max-w-3xl">
+            Western luxury skincare for
+            <span class="gradient-text">radiant, healthy skin</span>
+          </h1>
+          <p class="mt-6 max-w-xl text-base sm:text-lg opacity-80 leading-relaxed">
+            Elevated formulas powered by modern skin science, botanical actives, and timeless beauty rituals crafted for glow, repair, and confidence.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="#products" class="btn-primary px-7 py-4 rounded-full font-medium">Explore Products</a>
+            <a href="#routine" class="btn-secondary px-7 py-4 rounded-full font-medium">Build My Routine</a>
+          </div>
+
+          <div class="mt-10 grid grid-cols-3 gap-4 max-w-xl">
+            <div class="card p-4">
+              <div class="text-2xl font-bold">98%</div>
+              <div class="text-sm opacity-70">Visible glow in 14 days</div>
+            </div>
+            <div class="card p-4">
+              <div class="text-2xl font-bold">120k+</div>
+              <div class="text-sm opacity-70">Beauty lovers worldwide</div>
+            </div>
+            <div class="card p-4">
+              <div class="text-2xl font-bold">4.9/5</div>
+              <div class="text-sm opacity-70">Average product rating</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative reveal">
+          <div class="absolute -top-6 -left-6 card px-4 py-3 rounded-2xl z-10 parallax" style="--parallax: 0px;">
+            <div class="text-xs uppercase tracking-[.2em] opacity-60">Best Seller</div>
+            <div class="font-semibold">Rose Barrier Serum</div>
+          </div>
+
+          <div class="card p-4 sm:p-6 rounded-[32px] relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-[rgba(217,166,163,.16)]"></div>
+            <div class="grid sm:grid-cols-2 gap-4 relative z-10">
+              <div class="rounded-[28px] bg-[linear-gradient(180deg,#f7e7e5,#fff)] min-h-[440px] flex items-end justify-center p-6">
+                <div class="w-44 h-72 rounded-[28px] bg-[var(--rose)] shadow-2xl relative flex items-end justify-center pb-5">
+                  <div class="absolute top-5 inset-x-0 text-center">
+                    <div class="text-xs tracking-[.35em] uppercase">Veloura</div>
+                    <div class="serif text-2xl mt-2">Serum</div>
+                  </div>
+                  <div class="w-16 h-16 rounded-full bg-white/70"></div>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <div class="rounded-[28px] bg-[linear-gradient(180deg,#fff,#f3eee9)] p-5 h-[210px] flex flex-col justify-between">
+                  <div>
+                    <div class="text-sm opacity-60">Signature Formula</div>
+                    <div class="serif text-3xl">Calm, hydrate, renew</div>
+                  </div>
+                  <div class="flex flex-wrap gap-2 text-xs">
+                    <span class="badge px-3 py-2 rounded-full">Niacinamide</span>
+                    <span class="badge px-3 py-2 rounded-full">Peptides</span>
+                    <span class="badge px-3 py-2 rounded-full">Rose Stem Cells</span>
+                  </div>
+                </div>
+                <div class="rounded-[28px] bg-[var(--deep)] text-[var(--cream)] p-5 h-[210px] flex flex-col justify-between">
+                  <div>
+                    <div class="text-sm text-white/60">Recommended for</div>
+                    <div class="serif text-3xl">Dry, dull & sensitive skin</div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="text-sm text-white/60">Starting at</div>
+                      <div class="text-2xl font-bold">$42</div>
+                    </div>
+                    <button class="btn-secondary px-5 py-3 rounded-full font-medium">Add to Cart</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute -bottom-6 -right-4 card px-4 py-3 rounded-2xl z-10">
+            <div class="text-xs uppercase tracking-[.2em] opacity-60">Award</div>
+            <div class="font-semibold">2026 Glow Essentials Winner</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="overflow-hidden py-8 border-y border-[rgba(47,58,52,.08)] bg-white/45">
+      <div class="marquee">
+        <div class="flex gap-4">
+          <span class="badge px-5 py-3 rounded-full">Dermatologist Approved</span>
+          <span class="badge px-5 py-3 rounded-full">Clean Beauty Standards</span>
+          <span class="badge px-5 py-3 rounded-full">Non-Comedogenic</span>
+          <span class="badge px-5 py-3 rounded-full">Vegan Friendly</span>
+          <span class="badge px-5 py-3 rounded-full">Barrier Repair Focused</span>
+          <span class="badge px-5 py-3 rounded-full">No Harsh Fragrance</span>
+          <span class="badge px-5 py-3 rounded-full">Luxury Texture Experience</span>
+        </div>
+        <div class="flex gap-4">
+          <span class="badge px-5 py-3 rounded-full">Dermatologist Approved</span>
+          <span class="badge px-5 py-3 rounded-full">Clean Beauty Standards</span>
+          <span class="badge px-5 py-3 rounded-full">Non-Comedogenic</span>
+          <span class="badge px-5 py-3 rounded-full">Vegan Friendly</span>
+          <span class="badge px-5 py-3 rounded-full">Barrier Repair Focused</span>
+          <span class="badge px-5 py-3 rounded-full">No Harsh Fragrance</span>
+          <span class="badge px-5 py-3 rounded-full">Luxury Texture Experience</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 reveal">
+        <div>
+          <div class="text-sm uppercase tracking-[.3em] opacity-60">Shop by concern</div>
+          <h2 class="serif text-4xl sm:text-5xl section-title-line">Best-selling skincare</h2>
+        </div>
+        <div class="flex flex-wrap gap-3" id="filters">
+          <button class="filter-btn btn-primary px-5 py-3 rounded-full text-sm" data-filter="all">All</button>
+          <button class="filter-btn badge px-5 py-3 rounded-full text-sm" data-filter="hydration">Hydration</button>
+          <button class="filter-btn badge px-5 py-3 rounded-full text-sm" data-filter="brightening">Brightening</button>
+          <button class="filter-btn badge px-5 py-3 rounded-full text-sm" data-filter="antiaging">Anti-Aging</button>
+          <button class="filter-btn badge px-5 py-3 rounded-full text-sm" data-filter="sensitive">Sensitive</button>
+        </div>
+      </div>
+
+      <div class="grid grid-auto gap-6">
+        <div class="product-card card p-5 reveal" data-category="hydration sensitive">
+          <div class="rounded-[22px] h-56 bg-[linear-gradient(180deg,#fff,#f0dfdd)] flex items-center justify-center mb-5">
+            <div class="w-24 h-40 rounded-[20px] bg-[var(--rose)]"></div>
+          </div>
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <div class="text-xs uppercase tracking-[.2em] opacity-50">Serum</div>
+              <h3 class="serif text-2xl">Rose Barrier Serum</h3>
+            </div>
+            <span class="badge px-3 py-2 rounded-full text-xs">New</span>
+          </div>
+          <p class="mt-3 text-sm opacity-75">Replenishes moisture and calms redness with peptides and rose stem cells.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-semibold">$42</span>
+            <button class="btn-primary px-4 py-2 rounded-full text-sm">Add</button>
+          </div>
+        </div>
+
+        <div class="product-card card p-5 reveal" data-category="brightening antiaging">
+          <div class="rounded-[22px] h-56 bg-[linear-gradient(180deg,#fff,#ece7e0)] flex items-center justify-center mb-5">
+            <div class="w-24 h-40 rounded-[20px] bg-[var(--deep)]"></div>
+          </div>
+          <div class="text-xs uppercase tracking-[.2em] opacity-50">Cleanser</div>
+          <h3 class="serif text-2xl">Milk Enzyme Cleanse</h3>
+          <p class="mt-3 text-sm opacity-75">Gently polishes dull skin while preserving your moisture barrier.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-semibold">$28</span>
+            <button class="btn-primary px-4 py-2 rounded-full text-sm">Add</button>
+          </div>
+        </div>
+
+        <div class="product-card card p-5 reveal" data-category="brightening antiaging">
+          <div class="rounded-[22px] h-56 bg-[linear-gradient(180deg,#fff,#f0dfdd)] flex items-center justify-center mb-5">
+            <div class="w-24 h-40 rounded-[20px] bg-[#cfb295]"></div>
+          </div>
+          <div class="text-xs uppercase tracking-[.2em] opacity-50">Treatment</div>
+          <h3 class="serif text-2xl">Vitamin C Veil</h3>
+          <p class="mt-3 text-sm opacity-75">Boosts radiance and evens tone with stabilized vitamin C complex.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-semibold">$38</span>
+            <button class="btn-primary px-4 py-2 rounded-full text-sm">Add</button>
+          </div>
+        </div>
+
+        <div class="product-card card p-5 reveal" data-category="hydration sensitive antiaging">
+          <div class="rounded-[22px] h-56 bg-[linear-gradient(180deg,#fff,#ece7e0)] flex items-center justify-center mb-5">
+            <div class="w-24 h-40 rounded-[20px] bg-[#6e7b74]"></div>
+          </div>
+          <div class="text-xs uppercase tracking-[.2em] opacity-50">Cream</div>
+          <h3 class="serif text-2xl">Ceramide Cloud Cream</h3>
+          <p class="mt-3 text-sm opacity-75">Rich daily moisturizer that seals hydration and smooths fine lines.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-semibold">$46</span>
+            <button class="btn-primary px-4 py-2 rounded-full text-sm">Add</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="routine" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-8 items-start">
+        <div class="reveal">
+          <div class="text-sm uppercase tracking-[.3em] opacity-60">Interactive beauty tool</div>
+          <h2 class="serif text-4xl sm:text-5xl section-title-line">Build your ideal routine</h2>
+          <p class="mt-5 opacity-80 max-w-xl">Choose your main concern and discover a morning + evening skincare ritual curated for your skin goals.</p>
+
+          <div class="card p-6 mt-8">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <button class="concern-btn btn-secondary rounded-2xl px-5 py-4 text-left" data-concern="dryness">Dryness & Dehydration</button>
+              <button class="concern-btn badge rounded-2xl px-5 py-4 text-left" data-concern="dullness">Dullness & Uneven Tone</button>
+              <button class="concern-btn badge rounded-2xl px-5 py-4 text-left" data-concern="aging">Fine Lines & Firmness</button>
+              <button class="concern-btn badge rounded-2xl px-5 py-4 text-left" data-concern="sensitive">Sensitive & Redness</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-6 sm:p-8 reveal">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <div class="text-sm uppercase tracking-[.2em] opacity-50">Routine Preview</div>
+              <h3 id="routineTitle" class="serif text-3xl">For Dryness & Dehydration</h3>
+            </div>
+            <span id="routineTag" class="badge px-4 py-2 rounded-full text-sm">Hydration Focus</span>
+          </div>
+
+          <div class="mt-8 grid md:grid-cols-2 gap-6">
+            <div class="rounded-[24px] bg-white/70 p-5 border border-black/5">
+              <div class="text-xs uppercase tracking-[.3em] opacity-50">AM Ritual</div>
+              <ul id="amList" class="mt-4 space-y-3 text-sm"></ul>
+            </div>
+            <div class="rounded-[24px] bg-white/70 p-5 border border-black/5">
+              <div class="text-xs uppercase tracking-[.3em] opacity-50">PM Ritual</div>
+              <ul id="pmList" class="mt-4 space-y-3 text-sm"></ul>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button class="btn-primary px-5 py-3 rounded-full text-sm">Shop This Routine</button>
+            <button class="badge px-5 py-3 rounded-full text-sm">Save Routine</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="science" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-10 items-center">
+        <div class="card p-5 sm:p-6 reveal">
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div class="rounded-[28px] bg-[linear-gradient(180deg,#fff,#efe2e0)] p-6 min-h-[320px] flex flex-col justify-between">
+              <div>
+                <div class="text-xs uppercase tracking-[.3em] opacity-50">Ingredient Story</div>
+                <h3 class="serif text-3xl mt-3">Three-color palette inspired by skin, bloom & earth</h3>
+              </div>
+              <div class="flex gap-3">
+                <span class="w-12 h-12 rounded-full bg-[var(--cream)] border"></span>
+                <span class="w-12 h-12 rounded-full bg-[var(--rose)] border"></span>
+                <span class="w-12 h-12 rounded-full bg-[var(--deep)] border"></span>
+              </div>
+            </div>
+            <div class="rounded-[28px] bg-[var(--deep)] text-[var(--cream)] p-6 min-h-[320px] flex flex-col justify-between">
+              <div>
+                <div class="text-xs uppercase tracking-[.3em] text-white/50">Clean Formulation</div>
+                <h3 class="serif text-3xl mt-3">High-performance skincare with a refined sensory finish</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-white/80">
+                <li>• Clinically inspired actives</li>
+                <li>• Lightweight luxurious textures</li>
+                <li>• Barrier-first philosophy</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="text-sm uppercase tracking-[.3em] opacity-60">Skin science</div>
+          <h2 class="serif text-4xl sm:text-5xl section-title-line">Ingredients that do more</h2>
+          <div class="mt-6 space-y-4">
+            <div class="card p-5 rounded-[22px]">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <h4 class="font-semibold">Niacinamide</h4>
+                  <p class="text-sm opacity-70">Balances tone, refines pores, and supports the barrier.</p>
+                </div>
+                <span class="badge px-3 py-2 rounded-full text-xs">Brighten</span>
+              </div>
+            </div>
+            <div class="card p-5 rounded-[22px]">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <h4 class="font-semibold">Ceramides</h4>
+                  <p class="text-sm opacity-70">Strengthen skin’s natural moisture seal for lasting comfort.</p>
+                </div>
+                <span class="badge px-3 py-2 rounded-full text-xs">Repair</span>
+              </div>
+            </div>
+            <div class="card p-5 rounded-[22px]">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <h4 class="font-semibold">Peptides</h4>
+                  <p class="text-sm opacity-70">Help support firmness and smooth the look of fine lines.</p>
+                </div>
+                <span class="badge px-3 py-2 rounded-full text-xs">Renew</span>
+              </div>
+            </div>
+            <div class="card p-5 rounded-[22px]">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <h4 class="font-semibold">Rose Stem Cells</h4>
+                  <p class="text-sm opacity-70">Botanical innovation known for soothing and revitalizing skin.</p>
+                </div>
+                <span class="badge px-3 py-2 rounded-full text-xs">Calm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="text-center reveal">
+        <div class="text-sm uppercase tracking-[.3em] opacity-60">Visible transformation</div>
+        <h2 class="serif text-4xl sm:text-5xl inline-block section-title-line">Before & after glow</h2>
+      </div>
+
+      <div class="mt-12 before-after-wrap card max-w-5xl mx-auto reveal">
+        <div class="relative h-[420px] sm:h-[520px]">
+          <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80" alt="Before skin" class="absolute inset-0 w-full h-full object-cover" />
+          <div id="afterImage" class="before-after-after">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80" alt="After skin" class="absolute inset-0 w-full h-full object-cover" />
+          </div>
+          <div id="sliderLine" class="absolute top-0 bottom-0 left-1/2 w-[2px] bg-white z-10"></div>
+          <input id="beforeAfterSlider" type="range" min="0" max="100" value="50" class="range-thumb" />
+          <div class="absolute left-5 top-5 bg-black/35 text-white px-4 py-2 rounded-full text-sm">Before</div>
+          <div class="absolute right-5 top-5 bg-white/85 text-[var(--deep)] px-4 py-2 rounded-full text-sm">After 28 Days</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid lg:grid-cols-4 gap-6">
+        <div class="card p-6 reveal">
+          <div class="text-4xl font-bold">92%</div>
+          <p class="mt-2 text-sm opacity-75">Reported softer, more hydrated skin after 2 weeks.</p>
+        </div>
+        <div class="card p-6 reveal">
+          <div class="text-4xl font-bold">89%</div>
+          <p class="mt-2 text-sm opacity-75">Noticed improved brightness and smoother texture.</p>
+        </div>
+        <div class="card p-6 reveal">
+          <div class="text-4xl font-bold">97%</div>
+          <p class="mt-2 text-sm opacity-75">Said formulas layered beautifully under makeup.</p>
+        </div>
+        <div class="card p-6 reveal">
+          <div class="text-4xl font-bold">4.9/5</div>
+          <p class="mt-2 text-sm opacity-75">Average rating across our signature collection.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 reveal">
+        <div>
+          <div class="text-sm uppercase tracking-[.3em] opacity-60">Loved by customers</div>
+          <h2 class="serif text-4xl sm:text-5xl section-title-line">Real reviews, real rituals</h2>
+        </div>
+        <div class="flex gap-3">
+          <button id="prevReview" class="badge w-12 h-12 rounded-full">←</button>
+          <button id="nextReview" class="btn-primary w-12 h-12 rounded-full">→</button>
+        </div>
+      </div>
+
+      <div class="mt-10 overflow-hidden">
+        <div id="reviewTrack" class="slider-track flex gap-6">
+          <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] card p-6">
+            <div class="text-[var(--rose)] text-2xl">★★★★★</div>
+            <p class="mt-4 text-sm opacity-80">“The Rose Barrier Serum changed my skin in less than two weeks. My face looks calm, plump, and naturally lit from within.”</p>
+            <div class="mt-5 font-semibold">Amelia R.</div>
+            <div class="text-sm opacity-60">Los Angeles</div>
+          </div>
+          <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] card p-6">
+            <div class="text-[var(--rose)] text-2xl">★★★★★</div>
+            <p class="mt-4 text-sm opacity-80">“Elegant formulas, gorgeous packaging, and my skin genuinely feels stronger. The cream is my winter staple.”</p>
+            <div class="mt-5 font-semibold">Sophia M.</div>
+            <div class="text-sm opacity-60">New York</div>
+          </div>
+          <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] card p-6">
+            <div class="text-[var(--rose)] text-2xl">★★★★★</div>
+            <p class="mt-4 text-sm opacity-80">“Finally a luxury skincare brand that feels modern and actually performs. My tone is brighter and smoother.”</p>
+            <div class="mt-5 font-semibold">Harper J.</div>
+            <div class="text-sm opacity-60">Dallas</div>
+          </div>
+          <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] card p-6">
+            <div class="text-[var(--rose)] text-2xl">★★★★★</div>
+            <p class="mt-4 text-sm opacity-80">“Sensitive-skin friendly and beautiful to use. The cleanser never strips my skin and the serum feels silky.”</p>
+            <div class="mt-5 font-semibold">Olivia T.</div>
+            <div class="text-sm opacity-60">Chicago</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid lg:grid-cols-[1.1fr_.9fr] gap-8">
+        <div class="card p-6 sm:p-8 reveal">
+          <div class="text-sm uppercase tracking-[.3em] opacity-60">Brand benefits</div>
+          <h2 class="serif text-4xl section-title-line">Why beauty lovers choose Veloura</h2>
+          <div class="mt-8 grid sm:grid-cols-2 gap-4">
+            <div class="rounded-[22px] bg-white/70 p-5 border border-black/5">
+              <div class="font-semibold">Luxury aesthetic</div>
+              <p class="mt-2 text-sm opacity-75">Editorial western-inspired beauty design with a premium feel.</p>
+            </div>
+            <div class="rounded-[22px] bg-white/70 p-5 border border-black/5">
+              <div class="font-semibold">Clinical results</div>
+              <p class="mt-2 text-sm opacity-75">Ingredient-first formulas designed to improve skin over time.</p>
+            </div>
+            <div class="rounded-[22px] bg-white/70 p-5 border border-black/5">
+              <div class="font-semibold">Routine education</div>
+              <p class="mt-2 text-sm opacity-75">Guided rituals, layering tips, and concern-based recommendations.</p>
+            </div>
+            <div class="rounded-[22px] bg-white/70 p-5 border border-black/5">
+              <div class="font-semibold">Conscious beauty</div>
+              <p class="mt-2 text-sm opacity-75">Cruelty-free, mindful formulation standards, and elegant simplicity.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-6 sm:p-8 reveal">
+          <div class="text-sm uppercase tracking-[.3em] opacity-60">FAQ</div>
+          <h2 class="serif text-4xl section-title-line">Frequently asked questions</h2>
+          <div class="mt-6 space-y-4" id="faqList">
+            <div class="faq-item rounded-[20px] bg-white/75 p-5 border border-black/5">
+              <button class="faq-toggle w-full flex items-center justify-between text-left font-medium">
+                Are your formulas suitable for sensitive skin?
+                <span>+</span>
+              </button>
+              <div class="faq-answer text-sm opacity-75">Yes. Our formulas prioritize barrier support and avoid harsh stripping ingredients. We still recommend patch testing first.</div>
+            </div>
+            <div class="faq-item rounded-[20px] bg-white/75 p-5 border border-black/5">
+              <button class="faq-toggle w-full flex items-center justify-between text-left font-medium">
+                How long before I see results?
+                <span>+</span>
+              </button>
+              <div class="faq-answer text-sm opacity-75">Hydration and softness can appear quickly, while tone and texture improvements often become more visible within 2–6 weeks of consistent use.</div>
+            </div>
+            <div class="faq-item rounded-[20px] bg-white/75 p-5 border border-black/5">
+              <button class="faq-toggle w-full flex items-center justify-between text-left font-medium">
+                Are your products vegan and cruelty-free?
+                <span>+</span>
+              </button>
+              <div class="faq-answer text-sm opacity-75">Our brand is cruelty-free and most products are vegan friendly. Product pages include full ingredient and suitability details.</div>
+            </div>
+            <div class="faq-item rounded-[20px] bg-white/75 p-5 border border-black/5">
+              <button class="faq-toggle w-full flex items-center justify-between text-left font-medium">
+                Can I layer your serum with vitamin C or retinol?
+                <span>+</span>
+              </button>
+              <div class="faq-answer text-sm opacity-75">Yes, in most routines. We recommend applying from thinnest to richest texture and introducing active combinations gradually.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="card p-6 sm:p-10 rounded-[32px] reveal bg-[linear-gradient(135deg,rgba(255,255,255,.92),rgba(217,166,163,.22))]">
+        <div class="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+          <div>
+            <div class="text-sm uppercase tracking-[.3em] opacity-60">Join the glow list</div>
+            <h2 class="serif text-4xl sm:text-5xl max-w-2xl">Get skincare tips, new launches, rituals & exclusive offers</h2>
+          </div>
+          <form class="flex flex-col sm:flex-row gap-3">
+            <input type="email" placeholder="Enter your email" class="input rounded-full px-5 py-4 min-w-[280px]" />
+            <button type="button" class="btn-primary rounded-full px-6 py-4">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-8">
+        <div class="reveal">
+          <div class="text-sm uppercase tracking-[.3em] opacity-60">Contact & support</div>
+          <h2 class="serif text-4xl sm:text-5xl section-title-line">Let’s talk beauty</h2>
+          <p class="mt-5 max-w-lg opacity-80">Need product help, wholesale information, influencer collaboration, or skincare guidance? Our team is here for you.</p>
+
+          <div class="mt-8 space-y-4">
+            <div class="card p-5 rounded-[22px]">
+              <div class="font-semibold">Customer Care</div>
+              <div class="text-sm opacity-70 mt-1">hello@velouraskin.com</div>
+            </div>
+            <div class="card p-5 rounded-[22px]">
+              <div class="font-semibold">Head Office</div>
+              <div class="text-sm opacity-70 mt-1">Beverly Hills, California, USA</div>
+            </div>
+            <div class="card p-5 rounded-[22px]">
+              <div class="font-semibold">Social</div>
+              <div class="text-sm opacity-70 mt-1">@velouraskin on Instagram, TikTok & Pinterest</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-6 sm:p-8 reveal">
+          <form class="grid sm:grid-cols-2 gap-4">
+            <input class="input rounded-2xl px-4 py-4" placeholder="First Name" />
+            <input class="input rounded-2xl px-4 py-4" placeholder="Last Name" />
+            <input class="input rounded-2xl px-4 py-4 sm:col-span-2" placeholder="Email Address" />
+            <input class="input rounded-2xl px-4 py-4 sm:col-span-2" placeholder="Subject" />
+            <textarea class="input rounded-2xl px-4 py-4 sm:col-span-2 min-h-[160px]" placeholder="Tell us how we can help"></textarea>
+            <div class="sm:col-span-2 flex flex-wrap gap-3 items-center justify-between">
+              <label class="text-sm opacity-70 flex items-center gap-2">
+                <input type="checkbox" />
+                I agree to receive brand updates
+              </label>
+              <button type="button" class="btn-primary px-7 py-4 rounded-full">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-[rgba(47,58,52,.08)] bg-white/45">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row gap-5 items-center justify-between">
+      <div>
+        <div class="serif text-2xl font-semibold">Veloura Skin</div>
+        <div class="text-sm opacity-65">Refined skincare rituals for modern glow.</div>
+      </div>
+      <div class="text-sm opacity-70 text-center md:text-right">
+        © 2026 Veloura Skin. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <button class="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-[var(--deep)] text-[var(--cream)] flex items-center justify-center shadow-2xl pulse-ring">
+    ✦
+  </button>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    },{threshold:.16});
+    reveals.forEach(el=>observer.observe(el));
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+    filterBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        filterBtns.forEach(b=>{
+          b.classList.remove('btn-primary');
+          b.classList.add('badge');
+        });
+        btn.classList.add('btn-primary');
+        btn.classList.remove('badge');
+        const filter = btn.dataset.filter;
+        productCards.forEach(card=>{
+          const categories = card.dataset.category || '';
+          card.style.display = (filter === 'all' || categories.includes(filter)) ? '' : 'none';
+        });
+      });
+    });
+
+    const routineData = {
+      dryness: {
+        title:'For Dryness & Dehydration',
+        tag:'Hydration Focus',
+        am:['Milk Enzyme Cleanse','Rose Barrier Serum','Ceramide Cloud Cream','Daily SPF 50'],
+        pm:['Cream Cleanser','Hydrating Essence','Rose Barrier Serum','Overnight Recovery Balm']
+      },
+      dullness: {
+        title:'For Dullness & Uneven Tone',
+        tag:'Brightening Focus',
+        am:['Gentle Cleanser','Vitamin C Veil','Light Moisturizer','Daily SPF 50'],
+        pm:['Double Cleanse','Niacinamide Toner','Renewal Night Serum','Ceramide Cloud Cream']
+      },
+      aging: {
+        title:'For Fine Lines & Firmness',
+        tag:'Renewal Focus',
+        am:['Soft Cleanser','Peptide Lift Serum','Firming Cream','Daily SPF 50'],
+        pm:['Nourishing Cleanser','Retinol Alternate Nights','Peptide Lift Serum','Barrier Cream']
+      },
+      sensitive: {
+        title:'For Sensitive & Redness',
+        tag:'Soothing Focus',
+        am:['Cream Cleanser','Calm Mist','Rose Barrier Serum','Mineral SPF 50'],
+        pm:['Low-Foam Cleanser','Barrier Essence','Ceramide Cloud Cream','Recovery Oil']
+      }
+    };
+
+    const concernBtns = document.querySelectorAll('.concern-btn');
+    const routineTitle = document.getElementById('routineTitle');
+    const routineTag = document.getElementById('routineTag');
+    const amList = document.getElementById('amList');
+    const pmList = document.getElementById('pmList');
+
+    function renderRoutine(key){
+      const data = routineData[key];
+      routineTitle.textContent = data.title;
+      routineTag.textContent = data.tag;
+      amList.innerHTML = data.am.map(item=>`<li class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-[rgba(217,166,163,.22)] flex items-center justify-center font-semibold text-xs">✓</span>${item}</li>`).join('');
+      pmList.innerHTML = data.pm.map(item=>`<li class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-[rgba(47,58,52,.10)] flex items-center justify-center font-semibold text-xs">✓</span>${item}</li>`).join('');
+    }
+    renderRoutine('dryness');
+
+    concernBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        concernBtns.forEach(b=>{
+          b.classList.remove('btn-secondary');
+          b.classList.add('badge');
+        });
+        btn.classList.add('btn-secondary');
+        btn.classList.remove('badge');
+        renderRoutine(btn.dataset.concern);
+      });
+    });
+
+    const beforeAfterSlider = document.getElementById('beforeAfterSlider');
+    const afterImage = document.getElementById('afterImage');
+    const sliderLine = document.getElementById('sliderLine');
+    function updateBeforeAfter(){
+      const value = beforeAfterSlider.value;
+      afterImage.style.width = value + '%';
+      sliderLine.style.left = value + '%';
+    }
+    beforeAfterSlider?.addEventListener('input', updateBeforeAfter);
+    updateBeforeAfter();
+
+    const track = document.getElementById('reviewTrack');
+    const nextReview = document.getElementById('nextReview');
+    const prevReview = document.getElementById('prevReview');
+    let reviewIndex = 0;
+    function reviewStep(){
+      if(window.innerWidth >= 1024) return track.children[0].offsetWidth + 24;
+      if(window.innerWidth >= 768) return track.children[0].offsetWidth + 24;
+      return track.children[0].offsetWidth + 24;
+    }
+    function updateReviews(){
+      track.style.transform = `translateX(-${reviewIndex * reviewStep()}px)`;
+    }
+    nextReview?.addEventListener('click', ()=>{
+      reviewIndex = Math.min(reviewIndex + 1, track.children.length - 1);
+      updateReviews();
+    });
+    prevReview?.addEventListener('click', ()=>{
+      reviewIndex = Math.max(reviewIndex - 1, 0);
+      updateReviews();
+    });
+    window.addEventListener('resize', updateReviews);
+
+    document.querySelectorAll('.faq-toggle').forEach(toggle=>{
+      toggle.addEventListener('click', ()=>{
+        const item = toggle.closest('.faq-item');
+        item.classList.toggle('open');
+        toggle.querySelector('span').textContent = item.classList.contains('open') ? '−' : '+';
+      });
+    });
+
+    window.addEventListener('scroll', ()=>{
+      const y = window.scrollY;
+      document.querySelectorAll('.parallax').forEach((el,i)=>{
+        el.style.transform = `translateY(${y * (0.04 + i*0.01)}px)`;
+      });
+    });
+  </script>
+</body>
+</html>
